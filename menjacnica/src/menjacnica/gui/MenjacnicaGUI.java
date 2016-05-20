@@ -64,15 +64,12 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem mntmSave;
 	private JMenuItem mntmExit;
 	private JMenuItem mntmAbout;
-	
-	//klasa na logickom nivou
-	protected static MenjacnicaInterface sistem;
 	private static JTable table;
 
 	/**
 	 * Create the frame.
 	 */
-	public MenjacnicaGUI(MenjacnicaInterface sistem) {
+	public MenjacnicaGUI() {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -91,7 +88,6 @@ public class MenjacnicaGUI extends JFrame {
 		contentPane.add(getScrollPane(), BorderLayout.CENTER);
 		contentPane.add(getPanel(), BorderLayout.EAST);
 		
-		this.sistem = sistem;
 	}
 
 	private JScrollPane getScrollPane() {
@@ -234,6 +230,6 @@ public class MenjacnicaGUI extends JFrame {
 	
 	public static void prikaziSveValute() {
 		MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
-		model.staviSveValuteUModel(sistem.vratiKursnuListu());
+		model.staviSveValuteUModel(GUIKontroler.vratiKursnuListu());
 	}
 }

@@ -2,6 +2,7 @@ package menjacnica.gui;
 
 import java.awt.EventQueue;
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -24,7 +25,7 @@ public class GUIKontroler {
 			public void run() {
 				try {
 					sistem = new Menjacnica();
-					glavniProzor = new MenjacnicaGUI(sistem);
+					glavniProzor = new MenjacnicaGUI();
 					glavniProzor.setVisible(true);
 					glavniProzor.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -35,7 +36,7 @@ public class GUIKontroler {
 	}
 	
 	public static void prikaziDodajKursGUI() {
-		DodajKursGUI prozor = new DodajKursGUI(glavniProzor);
+		DodajKursGUI prozor = new DodajKursGUI();
 		prozor.setLocationRelativeTo(glavniProzor.getContentPane());
 		prozor.setVisible(true);
 	}
@@ -43,8 +44,7 @@ public class GUIKontroler {
 	public static void prikaziObrisiKursGUI(JTable table) {
 		if (table.getSelectedRow() != -1) {
 			MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
-			ObrisiKursGUI prozor = new ObrisiKursGUI(glavniProzor,
-					model.vratiValutu(table.getSelectedRow()));
+			ObrisiKursGUI prozor = new ObrisiKursGUI(model.vratiValutu(table.getSelectedRow()));
 			prozor.setLocationRelativeTo(glavniProzor.getContentPane());
 			prozor.setVisible(true);
 		}
@@ -53,8 +53,7 @@ public class GUIKontroler {
 	public static void prikaziIzvrsiZamenuGUI(JTable table) {
 		if (table.getSelectedRow() != -1) {
 			MenjacnicaTableModel model = (MenjacnicaTableModel)(table.getModel());
-			IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(glavniProzor,
-					model.vratiValutu(table.getSelectedRow()));
+			IzvrsiZamenuGUI prozor = new IzvrsiZamenuGUI(model.vratiValutu(table.getSelectedRow()));
 			prozor.setLocationRelativeTo(glavniProzor.getContentPane());
 			prozor.setVisible(true);
 		}
@@ -147,7 +146,7 @@ public class GUIKontroler {
 	public static String izvrsiZamenu(Valuta valuta, boolean isSelected, String iznos){
 		try{
 			String konacniIznos =""+ 
-					glavniProzor.sistem.izvrsiTransakciju(valuta, isSelected, Double.parseDouble(iznos));
+					sistem.izvrsiTransakciju(valuta, isSelected, Double.parseDouble(iznos));
 		
 			return konacniIznos;
 		} catch (Exception e1) {
@@ -155,5 +154,9 @@ public class GUIKontroler {
 				"Greska", JOptionPane.ERROR_MESSAGE);
 		return "";
 		}
+	}
+
+	public static List<Valuta> vratiKursnuListu() {
+		return sistem.vratiKursnuListu();
 	}
 }
